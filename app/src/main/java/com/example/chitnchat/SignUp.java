@@ -3,6 +3,7 @@ package com.example.chitnchat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -18,6 +19,8 @@ public class SignUp extends AppCompatActivity {
     ActivitySignUpBinding binding ;
     private FirebaseAuth auth ;
     FirebaseDatabase database ;
+    //Loading showoff
+    ProgressDialog progressDialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,19 +29,30 @@ public class SignUp extends AppCompatActivity {
         setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance() ;
         database = FirebaseDatabase.getInstance();
+        //progressDia setting
+        progressDialog = new ProgressDialog(SignUp.this) ;
+        progressDialog.setTitle("Creating your account");
+        progressDialog.setMessage("Hurray! Creating your account");
         //setting sign up button
         binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.show();
                 auth.createUserWithEmailAndPassword(binding.idemailSi.getText().toString() , binding.idpasswordSi.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
+                        progressDialog.dismiss();
+
                      if(task.isSuccessful()){
+
+                         Users user = new Users(binding.idname.getText().toString() , binding.idemailSi.getText().toString() , binding.idpasswordSi.getText().toString());
+                         String id = task.getResult().getUser().getUid() ;
+
+                         database.getReference().child("Users").child(id).setValue(user) ;
                          Toast.makeText(SignUp.this, "User Created Successfully", Toast.LENGTH_SHORT).show();
                      }
                      else
-                         Toast.makeText(SignUp.this, "", Toast.LENGTH_SHORT).show();
                         {
                             Toast.makeText(SignUp.this, task.getException().getMessage() , Toast.LENGTH_SHORT).show();
                         }

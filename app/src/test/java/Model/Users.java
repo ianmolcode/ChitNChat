@@ -11,13 +11,15 @@ public class Users {
         this.userID = userID;
         this.lastMessage = lastMessage;
     }
+    //default constructor
     public Users(){}
     //sign up constructor
-    public Users(String username , String password , String mail )
+    public Users(String username , String mail , String password )
     {
         this.username =  username ;
-        this.password = password ;
         this.mail = mail ;
+        this.password = password ;
+
     }
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
