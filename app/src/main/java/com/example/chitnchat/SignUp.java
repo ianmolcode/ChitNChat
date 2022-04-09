@@ -12,6 +12,10 @@ import android.widget.Toast;
 
 import com.example.chitnchat.Model.Users;
 import com.example.chitnchat.databinding.ActivitySignUpBinding;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +28,8 @@ public class SignUp extends AppCompatActivity {
     FirebaseDatabase database ;
     //Loading showoff
     ProgressDialog progressDialog ;
+    //sign in client
+    GoogleSignInClient mGoogleSignInClient ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,16 @@ public class SignUp extends AppCompatActivity {
         progressDialog.setTitle("Creating your account");
         progressDialog.setMessage("Hurray! Creating your account");
         //setting sign up button
+        //google sign in option
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this , gso) ;
+
+
         binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,5 +79,6 @@ public class SignUp extends AppCompatActivity {
                 });
             }
         });
+       
     }
 }
