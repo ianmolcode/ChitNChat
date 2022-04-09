@@ -3,11 +3,14 @@ package com.example.chitnchat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.chitnchat.Model.Users;
 import com.example.chitnchat.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

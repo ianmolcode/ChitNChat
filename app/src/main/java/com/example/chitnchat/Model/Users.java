@@ -1,4 +1,4 @@
-package Model;
+package com.example.chitnchat.Model;
 
 public class Users {
     String profilePic , username , password , mail , userID , lastMessage ;
