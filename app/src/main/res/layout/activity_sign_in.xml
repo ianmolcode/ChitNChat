@@ -25,7 +25,7 @@
 
 
         <EditText
-            android:id="@+id/idemail_si"
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
@@ -36,7 +36,7 @@
             android:padding="9dp" />
 
         <EditText
-            android:id="@+id/idpassword_si"
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -48,13 +48,13 @@
 
 
         <Button
-            android:id="@+id/signupButton"
+            android:id="@+id/signinButton"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="13dp"
             android:layout_marginTop="10dp"
             android:padding="18dp"
-            android:text="Sign Up"
+            android:text="Sign In"
             app:cornerRadius="4dp" />
 
         <LinearLayout
