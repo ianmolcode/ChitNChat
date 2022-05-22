@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.view.View;
@@ -46,6 +47,7 @@ public class SignUp extends AppCompatActivity {
         //google sign in option
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
@@ -77,6 +79,14 @@ public class SignUp extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        binding.alreadyhaveaccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignUp.this , SignInActivity.class);
+                startActivity(intent);
             }
         });
 
