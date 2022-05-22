@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
@@ -44,21 +45,22 @@ public class SignInActivity extends AppCompatActivity {
         progressDialog.setTitle("logIn");
         progressDialog.setMessage("Hurray! Creating your account");
 
-      //  GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        //        .requestIdToken(getString(R.string.default_web_client_id))
-          //      .requestEmail()
-            //    .build();
-             //  mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        signInRequest = BeginSignInRequest.builder()
-                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                        .setSupported(true)
-                        // Your server's client ID, not your Android client ID.
-                        .setServerClientId(getString(R.string.default_web_client_id))
-                        // Only show accounts previously used to sign in.
-                        .setFilterByAuthorizedAccounts(true)
-                        .build())
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
                 .build();
-
+               mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//        signInRequest = BeginSignInRequest.builder()
+//                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+//                        .setSupported(true)
+//                        // Your server's client ID, not your Android client ID.
+//                        .setServerClientId(getString(R.string.default_web_client_id))
+//                        // Only show accounts previously used to sign in.
+//                        .setFilterByAuthorizedAccounts(true)
+//                        .build())
+//                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
 
@@ -128,5 +130,25 @@ public class SignInActivity extends AppCompatActivity {
         });
 
 
+    }
+    int RC_SIGN_IN = 65 ;
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+        public void onActivityResult(int requestCode, int resultCode, Intent
+        android.content.Intent data;
+        data) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+            if (requestCode == RC_SIGN_IN) {
+                // The Task returned from this call is always completed, no need to attach
+                // a listener.
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handleSignInResult(task);
+            }
+        }
     }
 }
